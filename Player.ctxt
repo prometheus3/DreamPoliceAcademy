@@ -27,6 +27,6 @@ comment8.params=
 comment8.target=void\ inAbyss()
 comment8.text=\r\n\ Checks\ if\ a\ player\ is\ in\ the\ abyss.\ If\ true\r\n\ then\ the\ player\ is\ dead.\r\n
 comment9.params=
-comment9.target=boolean\ isDead()
+comment9.target=boolean\ areDead()
 comment9.text=\r\n\ Checks\ if\ a\ player\ is\ dead.\r\n
 numComments=10

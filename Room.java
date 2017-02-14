@@ -17,6 +17,7 @@ import java.util.Set;
  */
 public class Room 
 {
+    private String name;
     private String description;
     private HashMap<String, Room> exits;
     private HashMap<String, Item> objects;
@@ -27,8 +28,9 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String name, String description) 
     {
+        this.name = name;
         this.description = description;
         exits = new HashMap<String, Room>();
         objects = new HashMap<String, Item>();
@@ -68,6 +70,7 @@ public class Room
     {
         return objects.get(name);
     }
+    
     /**
      * @return The description of the room.
      */
@@ -76,6 +79,14 @@ public class Room
         return description;
     }
 
+    /**
+     * @return The name of the room.
+     */
+    public String getName()
+    {
+        return name;
+    }
+    
     /**
      * Return the room that is reached if we go from this
      * room in direction "direction".
@@ -110,7 +121,10 @@ public class Room
      */
     public String getLongDescription()
     {
-        String longDescription = "\tYou are " + description + "\n" + getExitString() + "\n";
+        String longDescription = "\tYou are " + description + "\n";
+        if(!exits.isEmpty()) {
+            longDescription += getExitString() + "\n";
+        }
         Collection<Item> values = objects.values();
         if(!objects.isEmpty())
         {

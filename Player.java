@@ -10,9 +10,8 @@ public class Player
 {
     private Room currentRoom;
     private ArrayList<Item> backpack;
-    private int maxWeight;
-    private int currentWeight;
-    private boolean dead;
+    private int maxWeight, currentWeight;
+    private boolean dead, vampire, flying;
 
     /**
      * Constructor for objects of class Player
@@ -24,6 +23,7 @@ public class Player
         this.maxWeight = maxWeight;
         currentWeight = 0;
         dead = false;
+        vampire = false;
     }
 
     /**
@@ -142,10 +142,8 @@ public class Player
         if(found)
         {
             backpack.remove(blood);
-            maxWeight += 50;
-            System.out.println("\tYou became a vampire!\n\tYou can now carry more things in human form\n" +
-                               "\tand you can fly as a bat, but be warned:  whilst flying as a bat\n" +
-                               "\tyou CANNOT access any items you possess.\n");
+            System.out.println("\tCongratulations, you became a vampire!\n\tYou can now fly.\n");
+            vampire = true;
         }
         else
         {
@@ -174,7 +172,7 @@ public class Player
      */
     public void inAbyss()
     {
-        if(currentRoom.getDescription().equals("in an abyss.")) {
+        if(currentRoom.getName().equals("abyss")) {
             dead = true;
         }
     }
@@ -182,7 +180,7 @@ public class Player
     /**
      * Checks if a player is dead.
      */
-    public boolean isDead()
+    public boolean areDead()
     {
         return dead;
     }

@@ -54,45 +54,45 @@ public class Game
         blood = new Item("blood", "A packet of blood", 8);
         
         // create the rooms
-        car = new Room("in a police car.");
-        outside = new Room("out of the police car.");
-        footpath = new Room("walking along the footpath.");
-        road = new Room("walking onto the road.");
-        partner = new Room("in your partner's head.");
+        car = new Room("car", "in a police car.");
+        outside = new Room("out", "out of the police car.");
+        footpath = new Room("footpath", "walking along the footpath.");
+        road = new Room("road", "walking onto the road.");
+        partner = new Room("partner", "in your partner's head.");
         
-        ledge = new Room("on a high ledge. You have a direct shot at your target.");
-        L1 = new Room("in the wolfman's head. There is a sign on a nearby " +
+        ledge = new Room("ledge", "on a high ledge. You have a direct shot at your target.");
+        L1 = new Room("level1", "in the wolfman's head. There is a sign on a nearby " +
                        "wall saying:\n\t\"ST MAGARET'S HOSPITAL: LEVEL ONE\"");
-        sw1 = new Room("on level 1 of the stairwell. A \"2\" is painted on the wall " +
+        sw1 = new Room("sw1", "on level 1 of the stairwell. A \"2\" is painted on the wall " +
                        "besides an upward arrow. A \"B\" is acompanied with a downward arrow.");
-        sw2 = new Room("on level 2 of the stairwell. There is a door leading to level 2.");
+        sw2 = new Room("sw2", "on level 2 of the stairwell. There is a door leading to level 2.");
         
-        L2 = new Room("on the east side of level 2. There is a sign on a nearby " +
+        L2 = new Room("level2", "on the east side of level 2. There is a sign on a nearby " +
                        "wall saying:\n\t\"ST MAGARET'S HOSPITAL: LEVEL TWO\"");
-        sw3 = new Room("on level 3 of the stairwell. There is a door leading to level 3.");
-        L3 = new Room("on the east side of level 3. There is a sign on a nearby " +
+        sw3 = new Room("sw3", "on level 3 of the stairwell. There is a door leading to level 3.");
+        L3 = new Room("level3", "on the east side of level 3. There is a sign on a nearby " +
                        "wall saying:\n\t\"ST MAGARET'S HOSPITAL: LEVEL THREE\"");
-        sw4 = new Room("on level 4 of the stairwell. There is a door leading to level 4.");
+        sw4 = new Room("sw4", "on level 4 of the stairwell. There is a door leading to level 4.");
         
-        L4 = new Room("on the east side of level 4. There is a sign on a nearby " +
+        L4 = new Room("level4", "on the east side of level 4. There is a sign on a nearby " +
                        "wall saying:\n\t\"ST MAGARET'S HOSPITAL: LEVEL FOUR\"");
         L4.addItem(blood);
         
-        sw6 = new Room("on level 6 of the stairwell. There is a door leading to level 6.");
-        L6 = new Room("on the east side of level 6. There is a sign on a nearby " +
+        sw6 = new Room("sw6", "on level 6 of the stairwell. There is a door leading to level 6.");
+        L6 = new Room("level6", "on the east side of level 6. There is a sign on a nearby " +
                        "wall saying:\n\t\"ST MAGARET'S HOSPITAL: LEVEL SIX\"");
-        L5 = new Room("on the west side of level 5. There is a rumbling noise coming " +
+        L5 = new Room("level5", "on the west side of level 5. There is a rumbling noise coming " +
                       "from the east. From sign on a nearby wall you read:" +
                        "\n\t\"ST MAGARET'S HOSPITAL: LEVEL FIVE\"");
-        B = new Room("in the basement of the hospital. It is too dark to see and there is most\n" +
+        B = new Room("basement", "in the basement of the hospital. It is too dark to see and there is most\n" +
                      "\tlikely an abyss to the west");
-        swb = new Room("on the basement level of the stairwell. There is a door leading " +
+        swb = new Room("swb", "on the basement level of the stairwell. There is a door leading " +
                        "to the basement");
-        lift = new Room("in an elevator. By the door is listed the options:\n" +
+        lift = new Room("lift", "in an elevator. By the door is listed the options:\n" +
                         "\tL6\n\tL4\n\tL3\n\tL2\n\tL1\n\tB\n\"L1\" is eluminated.");
-        shaft = new Room("in the elevator shaft; on top of the elevator. " +
+        shaft = new Room("shaft", "in the elevator shaft; on top of the elevator. " +
                          "Just above you see an open doorway you can climb through.");
-        abyss = new Room("in an abyss.");
+        abyss = new Room("abyss", "in an abyss.");
         
         // initialise room exits
         car.setExit("west", outside);
@@ -156,7 +156,7 @@ public class Game
             Command command = parser.getCommand();
             finished = processCommand(command);
             you.inAbyss();
-            if(you.isDead()) {
+            if(you.areDead()) {
                 System.out.println("\tYou died.");
                 finished = true;
             }
@@ -199,7 +199,7 @@ public class Game
         boolean wantToQuit = false;
 
         if(command.isUnknown()) {
-            System.out.println("I don't know what you mean...");
+            System.out.println("\tI don't know what you mean...");
             return false;
         }
 
@@ -224,7 +224,7 @@ public class Game
             }
             else
             {
-                System.out.println("You are at the beginning!");
+                System.out.println("\tYou are at the beginning!");
             }
         }
         else if(commandWord.equals("take")) {
