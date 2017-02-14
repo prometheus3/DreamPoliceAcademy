@@ -46,14 +46,11 @@ public class Game
     {
         Room car, outside, footpath, road, partner, ledge; // real world
         // killer's head. LEGEND: B - basement, L - level, sw - stairwell
-        Room B, L1, L2, L3, L4, L5, L6, lift, shaft, swb, sw1, sw2, sw3, sw4, sw6; // dream world
+        Room B, L1, L2, L3, L4, L5, L6, lift, shaft, swb, sw1, sw2, sw3, sw4, sw6, abyss; // dream world
         
-        Item dreamGun, file, bottle, cake, knife, blood;
+        Item dreamGun, file, blood;
         dreamGun = new Item("dreamgun", "A purple dreamgun", 50);
         file = new Item("file", "A manilla envelope (the wolfman's file)", 2);
-        bottle = new Item("bottle", "An empty water bottle", 10);
-        cake = new Item("cake", "A piece of chocolate cake", 5);
-        knife = new Item("knife", "A swiss army knife", 12);
         blood = new Item("blood", "A packet of blood", 8);
         
         // create the rooms
@@ -64,20 +61,14 @@ public class Game
         partner = new Room("in your partner's head.");
         
         ledge = new Room("on a high ledge. You have a direct shot at your target.");
-        ledge.addItem(bottle);
-        ledge.addItem(cake);
-        
         L1 = new Room("in the wolfman's head. There is a sign on a nearby " +
                        "wall saying:\n\t\"ST MAGARET'S HOSPITAL: LEVEL ONE\"");
-        L1.addItem(blood);
         sw1 = new Room("on level 1 of the stairwell. A \"2\" is painted on the wall " +
                        "besides an upward arrow. A \"B\" is acompanied with a downward arrow.");
         sw2 = new Room("on level 2 of the stairwell. There is a door leading to level 2.");
         
         L2 = new Room("on the east side of level 2. There is a sign on a nearby " +
                        "wall saying:\n\t\"ST MAGARET'S HOSPITAL: LEVEL TWO\"");
-        L2.addItem(knife);
-        
         sw3 = new Room("on level 3 of the stairwell. There is a door leading to level 3.");
         L3 = new Room("on the east side of level 3. There is a sign on a nearby " +
                        "wall saying:\n\t\"ST MAGARET'S HOSPITAL: LEVEL THREE\"");
@@ -85,6 +76,7 @@ public class Game
         
         L4 = new Room("on the east side of level 4. There is a sign on a nearby " +
                        "wall saying:\n\t\"ST MAGARET'S HOSPITAL: LEVEL FOUR\"");
+        L4.addItem(blood);
         
         sw6 = new Room("on level 6 of the stairwell. There is a door leading to level 6.");
         L6 = new Room("on the east side of level 6. There is a sign on a nearby " +
@@ -92,14 +84,15 @@ public class Game
         L5 = new Room("on the west side of level 5. There is a rumbling noise coming " +
                       "from the east. From sign on a nearby wall you read:" +
                        "\n\t\"ST MAGARET'S HOSPITAL: LEVEL FIVE\"");
-        B = new Room("in the basement of the hospital. It is pitch black so you cannot " +
-                     "see a thing.");
+        B = new Room("in the basement of the hospital. It is too dark to see and there is most\n" +
+                     "\tlikely an abyss to the west");
         swb = new Room("on the basement level of the stairwell. There is a door leading " +
                        "to the basement");
         lift = new Room("in an elevator. By the door is listed the options:\n" +
                         "\tL6\n\tL4\n\tL3\n\tL2\n\tL1\n\tB\n\"L1\" is eluminated.");
         shaft = new Room("in the elevator shaft; on top of the elevator. " +
                          "Just above you see an open doorway you can climb through.");
+        abyss = new Room("in an abyss.");
         
         // initialise room exits
         car.setExit("west", outside);
@@ -134,6 +127,7 @@ public class Game
         L4.setExit("east", sw4);
         L6.setExit("east", sw6);
         B.setExit("east", swb);
+        B.setExit("west", abyss);
         swb.setExit("up", sw1);
         swb.setExit("west", B);
         lift.setExit("up", shaft);
@@ -161,6 +155,11 @@ public class Game
         while (! finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
+            you.inAbyss();
+            if(you.isDead()) {
+                System.out.println("\tYou died.");
+                finished = true;
+            }
         }
         System.out.println("\tThank you for playing.  Good bye.");
     }
@@ -225,7 +224,7 @@ public class Game
             }
             else
             {
-                System.out.println("\tYou are at the beginning!");
+                System.out.println("You are at the beginning!");
             }
         }
         else if(commandWord.equals("take")) {
@@ -253,7 +252,7 @@ public class Game
      */
     private void printHelp() 
     {
-        System.out.println("\tYour command words are:");
+        System.out.println("Your command words are:");
         System.out.println(parser.showCommands());
     }
 
@@ -265,7 +264,7 @@ public class Game
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
-            System.out.println("\tGo where?");
+            System.out.println("Go where?");
             return;
         }
 
@@ -276,7 +275,7 @@ public class Game
         Room nextRoom = currentRoom.getExit(direction);
         
         if (nextRoom == null) {
-            System.out.println("\tThere is no door!");
+            System.out.println("Cannot go in that direction.");
         }
         else {
             path.push(currentRoom);
@@ -292,7 +291,7 @@ public class Game
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to take...
-            System.out.println("\tTake what?");
+            System.out.println("Take what?");
             return;
         }
         
@@ -309,7 +308,7 @@ public class Game
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to drop...
-            System.out.println("\tDrop what?");
+            System.out.println("Drop what?");
             return;
         }
         
@@ -326,7 +325,7 @@ public class Game
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to drink...
-            System.out.println("\tDrink what?");
+            System.out.println("Drink what?");
             return;
         }
         
@@ -339,7 +338,7 @@ public class Game
         }
         else
         {
-            System.out.println("\tWhat d'you mean \"" + substance + "\"?\n");
+            System.out.println("I'm not sure what you mean...");
         }
     }
     
@@ -351,7 +350,7 @@ public class Game
     private boolean quit(Command command) 
     {
         if(command.hasSecondWord()) {
-            System.out.println("\tQuit what?");
+            System.out.println("Quit what?");
             return false;
         }
         else {
@@ -372,6 +371,6 @@ public class Game
      */
     private void eat()
     {
-        System.out.println("\tYou have eaten now and you are not hungry any more.");
-    }
+        System.out.println("You have eaten now and you are not hungry any more.");
+    }   
 }

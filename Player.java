@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 /**
  * The user playing the game. Can
- * walk around, and carry items (soon).
+ * walk around, and carry items.
  * 
  * @author Phillip Rossetti 
  * @version 09/02/2017
@@ -12,6 +12,7 @@ public class Player
     private ArrayList<Item> backpack;
     private int maxWeight;
     private int currentWeight;
+    private boolean dead;
 
     /**
      * Constructor for objects of class Player
@@ -22,6 +23,7 @@ public class Player
         backpack = new ArrayList<Item>();
         this.maxWeight = maxWeight;
         currentWeight = 0;
+        dead = false;
     }
 
     /**
@@ -164,5 +166,24 @@ public class Player
             System.out.println("\t\t- " + item.getDescription() + ", wt: " + item.getWeight());
         }
         System.out.println();
+    }
+    
+    /**
+     * Checks if a player is in the abyss. If true
+     * then the player is dead.
+     */
+    public void inAbyss()
+    {
+        if(currentRoom.getDescription().equals("in an abyss.")) {
+            dead = true;
+        }
+    }
+    
+    /**
+     * Checks if a player is dead.
+     */
+    public boolean isDead()
+    {
+        return dead;
     }
 }
