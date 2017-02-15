@@ -160,6 +160,11 @@ public class Game
         }
         
 
+        System.out.println();                 
+        System.out.println("Type 'help' if you need help.");
+
+        printLocationInfo();
+        
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
                 
@@ -195,10 +200,6 @@ public class Game
                            "\"Good luck Charlie,\" he says, \"you're gonna need it.\"\nYou place the dreamgun and file into" +
                            " your police vest. As you turn to\nleave he grabs you by the shoulder.\n\"And remember Charlie:" +
                            " that gun is very confidential; if you veer\nanywhere off course, I will shoot to kill.\"");                  
-        System.out.println();                 
-        System.out.println("Type 'help' if you need help.");
-
-        printLocationInfo();
     }
     
     /**
