@@ -108,8 +108,9 @@ public class Game
         partner.setExit("west", road);
         ledge.setExit("east", outside);
         ledge.setExit("west", L1);
-        L1.setExit("east", sw1);
-        L1.setExit("west", lift);
+        L1.setExit("east", ledge);
+        L1.setExit("west", sw1);
+        L1.setExit("south", lift);
         sw1.setExit("up", sw2);
         sw1.setExit("down", swb);
         sw1.setExit("west", L1);
