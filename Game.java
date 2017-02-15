@@ -153,7 +153,7 @@ public class Game
         String character = agree.next();
         if (character.equals("y")) {
             printWelcome();
-        } else if (character.equals("n") {
+        } else if (character.equals("n")) {
             System.out.println("You have chosen not to hear the full intro");
         } else {
             //Do Nothing
