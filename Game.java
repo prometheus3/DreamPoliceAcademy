@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import java.util.Stack;
 
 /**
@@ -19,6 +20,7 @@ import java.util.Stack;
 public class Game 
 {
     private Parser parser;
+    private Scanner agree;
     private Stack<Room> path;
     private Player you;
     
@@ -145,8 +147,18 @@ public class Game
      *  Main play routine.  Loops until end of play.
      */
     public void play() 
-    {            
-        printWelcome();
+    {   
+        agree = new Scanner(System.in);
+        System.out.print("Would you like to have a full introduction? (y/n)");
+        String character = agree.next();
+        if (character.equals("y")) {
+            printWelcome();
+        } else if (character.equals("n") {
+            System.out.println("You have chosen not to hear the full intro");
+        } else {
+            //Do Nothing
+        }
+        
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
