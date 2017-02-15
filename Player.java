@@ -13,6 +13,7 @@ public class Player
     private int maxWeight, currentWeight;
     private boolean dead, vampire, flying;
 
+    
     /**
      * Constructor for objects of class Player
      */
