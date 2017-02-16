@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * This class is part of the "World of Zuul" application. 
  * "World of Zuul" is a very simple, text based adventure game.  
@@ -19,22 +21,33 @@
 
 public class Command
 {
-    private String commandWord;
-    private String secondWord;
+    private ArrayList<String> commands;
 
     /**
      * Create a command object. First and second word must be supplied, but
      * either one (or both) can be null.
-     * @param firstWord The first word of the command. Null if the command
-     *                  was not recognised.
-     * @param secondWord The second word of the command.
      */
-    public Command(String firstWord, String secondWord)
+    public Command()
     {
-        commandWord = firstWord;
-        this.secondWord = secondWord;
+        commands = new ArrayList<String>();
     }
 
+    /**
+     * Allows for a list to replace the current list of words.
+     */
+    public void addAlternatives(ArrayList<String> alternatives)
+    {
+        commands = alternatives;
+    }
+    
+    /**
+     * Allows for the addition of one similar word.
+     */
+    public void addAlternative(String alternative)
+    {
+        commands.add(alternative);
+    }
+//******************************************    
     /**
      * Return the command word (the first word) of this command. If the
      * command was not understood, the result is null.
@@ -42,7 +55,7 @@ public class Command
      */
     public String getCommandWord()
     {
-        return commandWord;
+        return command;
     }
 
     /**
