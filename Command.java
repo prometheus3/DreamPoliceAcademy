@@ -21,15 +21,21 @@ import java.util.ArrayList;
 
 public class Command
 {
-    private ArrayList<String> commands;
+    private ArrayList<String> commands;         // list of commands
+    private String message;         // something to print after/before command is complete
+    private Player user;
+    private byte todo;          // bit code of which methods to perform in the command
 
     /**
      * Create a command object. First and second word must be supplied, but
      * either one (or both) can be null.
      */
-    public Command()
+    public Command(String message, byte todo, Player user)
     {
         commands = new ArrayList<String>();
+        this.message = message;
+        this.todo = todo;
+        this.user = user;
     }
 
     /**
@@ -47,7 +53,45 @@ public class Command
     {
         commands.add(alternative);
     }
-//******************************************    
+    
+    /**
+     * Checks if a given string is a possible command.
+     */
+    public boolean isCommand(String newWord)
+    {
+        for(String command : commands)  // search for the new input word in the list of possible commands
+        {
+            if(command.equals(newWord)) {
+                return true;        // command was found
+            }
+        }
+        return false;       // command was not found
+    }
+    
+    /**
+     * 
+     */
+    public void action(String[] words)
+    {
+        //what to do
+    }
+    
+    /**
+     * Display any message required for the command.
+     */
+    public void response()
+    {
+        System.out.println(message);
+    }
+    
+    /**
+     * Return the player of the game.
+     */
+    public Player getUser()
+    {
+        return user;
+    }
+    
     /**
      * Return the command word (the first word) of this command. If the
      * command was not understood, the result is null.

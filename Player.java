@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Collection;
 /**
  * The user playing the game. Can
  * walk around, and carry items.
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 public class Player
 {
     private Room currentRoom;
-    private ArrayList<Item> backpack;
+    private HashMap<String, Item> backpack;
     private int maxWeight, currentWeight;
     private boolean dead, vampire, flying;
 
@@ -20,7 +21,7 @@ public class Player
     public Player(int maxWeight)
     {
         currentRoom = null;
-        backpack = new ArrayList<Item>();
+        backpack = new HashMap<String, Item>();
         this.maxWeight = maxWeight;
         currentWeight = 0;
         dead = false;
@@ -57,7 +58,7 @@ public class Player
         {
             removed = currentRoom.removeItem(item);
             // pick up item
-            backpack.add(removed);
+            backpack.put(removed.getName(), removed);
             currentWeight += removed.getWeight();
             
             System.out.println("\tOk.\n");
@@ -74,8 +75,22 @@ public class Player
      */
     public void addItem(Item item)
     {
-        backpack.add(item);
+        backpack.put(item.getName(), item);
         currentWeight += item.getWeight();
+    }
+    
+    /**
+     * Remove/use an item from backpack, NOT returning it to the
+     * backpack.
+     * @return True if successful.
+     */
+    public boolean use(String item)
+    {
+        Item present = backpack.remove(item);
+        if(present != null) {
+            currentWeight -= present.getWeight();
+        }
+        return (present != null);
     }
     
     /**
@@ -158,9 +173,10 @@ public class Player
      */
     public void items()
     {
+        Collection<Item> items = backpack.values();
         System.out.println("\tCurrent weight: " + currentWeight + ", Maximum weight: " + maxWeight);
         System.out.println("\tYou are carrying:");
-        for(Item item : backpack)
+        for(Item item : items)
         {
             System.out.println("\t\t- " + item.getDescription() + ", wt: " + item.getWeight());
         }

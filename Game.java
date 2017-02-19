@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -24,6 +25,7 @@ public class Game
     private Scanner agree;
     private Stack<Room> path;
     private Player you;
+    private ArrayList<Command> commands;
     
     /**
      * Create the game and initialise its internal map.
@@ -34,6 +36,7 @@ public class Game
         createRooms();
         parser = new Parser();
         path = new Stack<Room>();
+        commands = new ArrayList<Command>();
     }
 
     public static void main(String[] args)
@@ -171,8 +174,8 @@ public class Game
                 
         boolean finished = false;
         while (! finished) {
-            Command command = parser.getCommand();
-            finished = processCommand(command);
+            String[] words = parser.getCommand();
+            finished = processCommand(words);
             you.inAbyss();
             if(you.areDead()) {
                 System.out.println("\tYou died.");
@@ -208,16 +211,28 @@ public class Game
      * @param command The command to be processed.
      * @return true If the command ends the game, false otherwise.
      */
-    private boolean processCommand(Command command) 
+    private boolean processCommand(String[] words) 
     {
         boolean wantToQuit = false;
-
-        if(command.isUnknown()) {
-            System.out.println("\tI don't know what you mean...");
+        Command confirmedCommand = null;
+        
+        for(Command command : commands)     // check if any of the commands created match the given command
+        {
+            if(command.isCommand(words[0])) {
+                confirmedCommand = command;
+            }
+        }
+        
+        if(confirmedCommand == null) {
+            System.out.println("I don't know what you mean...");
             return false;
         }
-
-        String commandWord = command.getCommandWord();
+        else
+        {
+            confirmedCommand.action(words);
+            return false;
+        }
+        
         if(commandWord.equals("help")) {
             printHelp();
         }
@@ -226,9 +241,6 @@ public class Game
         }
         else if(commandWord.equals("look")) {
             printLocationInfo();
-        }
-        else if(commandWord.equals("eat")) {
-            eat();
         }
         else if(commandWord.equals("back")) {
             if(!path.empty())
@@ -379,12 +391,4 @@ public class Game
     {
         System.out.println(you.getRoom().getLongDescription());
     }
-    
-    /**
-     * Prints a description of eating.
-     */
-    private void eat()
-    {
-        System.out.println("You have eaten now and you are not hungry any more.");
-    }   
 }

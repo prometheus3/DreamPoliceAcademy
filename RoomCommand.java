@@ -8,13 +8,18 @@
 public class RoomCommand extends Command
 {
     private String room;
-
+    
     /**
      * Constructor for objects of class RoomRelated
      */
-    public RoomCommand(String room)
+    public RoomCommand(String response, byte todo, String room)
     {
-        super();
+        super(response, todo);
         this.room = room;
     }
+    
+    /**
+     * 
+     */
+    public void leaveRoom(){}
 }
