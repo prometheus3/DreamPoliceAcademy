@@ -2,7 +2,7 @@
 /**
  * Write a description of class ItemRoomCommand here.
  * 
- * @author (your name) 
+ * @author Phillip Rossetti
  * @version (a version number or a date)
  */
 public class ItemCommand extends Command
@@ -41,5 +41,30 @@ public class ItemCommand extends Command
     public boolean expendItem()
     {
         return getUser().use(item);
+    }
+    
+    /**
+     * Print out current inventory of the player.
+     */
+    public void printItemDetails()
+    {
+        getUser().items();
+    }
+    
+    public void action(String[] words)
+    {
+        byte code = getTodo();
+        if(code && 00000001 == 00000001) {
+            dropItem(item);
+        }
+        if(code && 00000010 == 00000010) {
+            pickUpItem(item);
+        }
+        if(code && 00000100 == 00000100) {
+            expendItem(item);
+        }
+        if(code && 00001000 == 00010000) {
+            printItemDetails();
+        }
     }
 }

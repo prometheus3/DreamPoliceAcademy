@@ -2,7 +2,7 @@
  * Subclass for any command that is only room-related, e.g the command "exit"
  * may only work when in the "elevator" room.
  * 
- * @author (your name) 
+ * @author Phillip Rossetti
  * @version (a version number or a date)
  */
 public class RoomCommand extends Command

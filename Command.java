@@ -24,11 +24,10 @@ public class Command
     private ArrayList<String> commands;         // list of commands
     private String message;         // something to print after/before command is complete
     private Player user;
-    private byte todo;          // bit code of which methods to perform in the command
+    private byte todo;          // a bit of code for which methods to perform in the command
 
     /**
-     * Create a command object. First and second word must be supplied, but
-     * either one (or both) can be null.
+     * Create a command object.
      */
     public Command(String message, byte todo, Player user)
     {
@@ -73,7 +72,7 @@ public class Command
      */
     public void action(String[] words)
     {
-        //what to do
+        //what to do. Should be specified in the appropriate subclass.
     }
     
     /**
@@ -93,38 +92,11 @@ public class Command
     }
     
     /**
-     * Return the command word (the first word) of this command. If the
-     * command was not understood, the result is null.
-     * @return The command word.
+     * Return the code of the command.
      */
-    public String getCommandWord()
+    public byte getTodo()
     {
-        return command;
-    }
-
-    /**
-     * @return The second word of this command. Returns null if there was no
-     * second word.
-     */
-    public String getSecondWord()
-    {
-        return secondWord;
-    }
-
-    /**
-     * @return true if this command was not understood.
-     */
-    public boolean isUnknown()
-    {
-        return (commandWord == null);
-    }
-
-    /**
-     * @return true if the command has a second word.
-     */
-    public boolean hasSecondWord()
-    {
-        return (secondWord != null);
+        return todo;
     }
 }
 

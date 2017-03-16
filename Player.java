@@ -63,7 +63,7 @@ public class Player
             
             System.out.println("\tOk.\n");
         }
-        else            // backpack is (would be) full
+        else            // backpack is (or would be) full
         {
             System.out.println("\tCannot carry any more! You must first drop " +
                                "an item.\n");
@@ -89,6 +89,10 @@ public class Player
         Item present = backpack.remove(item);
         if(present != null) {
             currentWeight -= present.getWeight();
+        }
+        else
+        {
+            System.out.println("\tYou are not carrying that.\n");
         }
         return (present != null);
     }
