@@ -13,10 +13,7 @@ import java.util.ArrayList;
 
 public class CommandWords
 {
-    // a constant array that holds all valid command words
-    /*private static final String[] validCommands = {
-        "go", "quit", "help", "look", "eat", "drink", "back", "take", "drop", "inventory"
-    };*/
+    // an ArrayList that holds all valid command words
     private ArrayList<String> validCommands;
 
     /**
@@ -51,10 +48,6 @@ public class CommandWords
                 return true;
             }
         }
-        /*for(int i = 0; i < validCommands.length; i++) {
-            if(validCommands[i].equals(aString))
-                return true;
-        }*/
         // if we get here, the string was not found in the commands
         return false;
     }
