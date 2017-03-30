@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * This class is part of the "World of Zuul" application. 
  * "World of Zuul" is a very simple, text based adventure game.  
@@ -12,16 +14,27 @@
 public class CommandWords
 {
     // a constant array that holds all valid command words
-    private static final String[] validCommands = {
+    /*private static final String[] validCommands = {
         "go", "quit", "help", "look", "eat", "drink", "back", "take", "drop", "inventory"
-    };
+    };*/
+    private ArrayList<String> validCommands;
 
     /**
      * Constructor - initialise the command words.
      */
     public CommandWords()
     {
-        // nothing to do at the moment...
+        validCommands = new ArrayList<String>();
+        validCommands.add("go");
+        validCommands.add("quit");
+        validCommands.add("help");
+        validCommands.add("look");
+        validCommands.add("eat");
+        validCommands.add("drink");
+        validCommands.add("back");
+        validCommands.add("take");
+        validCommands.add("drop");
+        validCommands.add("inventory");
     }
 
     /**
@@ -31,10 +44,17 @@ public class CommandWords
      */
     public boolean isCommand(String aString)
     {
-        for(int i = 0; i < validCommands.length; i++) {
+        for(String command : validCommands)
+        {
+            if(command.equals(aString))
+            {
+                return true;
+            }
+        }
+        /*for(int i = 0; i < validCommands.length; i++) {
             if(validCommands[i].equals(aString))
                 return true;
-        }
+        }*/
         // if we get here, the string was not found in the commands
         return false;
     }
