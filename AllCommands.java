@@ -9,24 +9,33 @@ import java.util.ArrayList;
  */
 public class AllCommands
 {
-    private byte todo;      // controls what happens in the action method
+/*  private byte todo;      // controls what happens in the action method */
     private String keyWord;     // the command word
-    private ArrayList<String> alternatives;     // alternatives to the command word
+/*  private ArrayList<String> alternatives;     // alternatives to the command word
     private boolean expectSecondWord;       // whether a second word is needed or not
     private String goodResponse;        // Strings to be printed if command successful
     private String badResponse;     // Strings to be printed if command failed
-
+*/
     /**
      * Constructor for objects of class AllCommands
      */
-    public AllCommands(byte todo, String keyWord, boolean expectSecondWord, String goodResponse, String badResponse)
+    public AllCommands(/*byte todo, */String keyWord/*, boolean expectSecondWord, String goodResponse, String badResponse*/)
     {
         // initialise instance variables
-        this.todo = todo;
+/*      this.todo = todo;*/
         this.keyWord = keyWord;
-        this.expectSecondWord = expectSecondWord;
+/*      this.expectSecondWord = expectSecondWord;
         this.goodResponse = goodResponse;
         this.badResponse = badResponse;
-        alternatives = new ArrayList<String>();
+        alternatives = new ArrayList<String>();*/
+    }
+    
+    /**
+     * Returns the (main) command word.
+     * @return The command word.
+     */
+    public String getKeyWord()
+    {
+        return keyWord;
     }
 }

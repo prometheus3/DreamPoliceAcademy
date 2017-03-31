@@ -14,24 +14,24 @@ import java.util.ArrayList;
 public class CommandWords
 {
     // an ArrayList that holds all valid command words
-    private ArrayList<String> validCommands;
+    private ArrayList<AllCommands> validCommands;
 
     /**
      * Constructor - initialise the command words.
      */
     public CommandWords()
     {
-        validCommands = new ArrayList<String>();
-        validCommands.add("go");
-        validCommands.add("quit");
-        validCommands.add("help");
-        validCommands.add("look");
-        validCommands.add("eat");
-        validCommands.add("drink");
-        validCommands.add("back");
-        validCommands.add("take");
-        validCommands.add("drop");
-        validCommands.add("inventory");
+        validCommands = new ArrayList<AllCommands>();
+        validCommands.add(new AllCommands("go"));
+        validCommands.add(new AllCommands("quit"));
+        validCommands.add(new AllCommands("help"));
+        validCommands.add(new AllCommands("look"));
+        validCommands.add(new AllCommands("eat"));
+        validCommands.add(new AllCommands("drink"));
+        validCommands.add(new AllCommands("back"));
+        validCommands.add(new AllCommands("take"));
+        validCommands.add(new AllCommands("drop"));
+        validCommands.add(new AllCommands("inventory"));
     }
 
     /**
@@ -41,9 +41,9 @@ public class CommandWords
      */
     public boolean isCommand(String aString)
     {
-        for(String command : validCommands)
+        for(AllCommands command : validCommands)
         {
-            if(command.equals(aString))
+            if(command.getKeyWord().equals(aString))
             {
                 return true;
             }
@@ -59,9 +59,9 @@ public class CommandWords
     public String getCommandList()
     {
         String commands = "";
-        for(String command : validCommands)
+        for(AllCommands command : validCommands)
         {
-            commands += command + " ";
+            commands += command.getKeyWord() + " ";
         }
         return (commands += "\n");
     }
