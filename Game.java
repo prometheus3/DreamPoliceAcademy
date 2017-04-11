@@ -171,7 +171,7 @@ public class Game
                 
         boolean finished = false;
         while (! finished) {
-            Command command = parser.getCommand();
+            Input command = parser.getCommand();
             finished = processCommand(command);
             you.inAbyss();
             if(you.areDead()) {
@@ -208,7 +208,7 @@ public class Game
      * @param command The command to be processed.
      * @return true If the command ends the game, false otherwise.
      */
-    private boolean processCommand(Command command) 
+    private boolean processCommand(Input command) 
     {
         boolean wantToQuit = false;
 
@@ -274,7 +274,7 @@ public class Game
      * Try to go in one direction. If there is an exit, enter
      * the new room, otherwise print an error message.
      */
-    private void goRoom(Command command) 
+    private void goRoom(Input command) 
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
@@ -301,7 +301,7 @@ public class Game
     /**
      * Try to take something.
      */
-    private void take(Command command)
+    private void take(Input command)
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to take...
@@ -318,7 +318,7 @@ public class Game
     /**
      * Try to drop something.
      */
-    private void drop(Command command)
+    private void drop(Input command)
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to drop...
@@ -335,7 +335,7 @@ public class Game
     /**
      * Try to drink something.
      */
-    private void drink(Command command)
+    private void drink(Input command)
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to drink...
@@ -361,7 +361,7 @@ public class Game
      * whether we really quit the game.
      * @return true, if this command quits the game, false otherwise.
      */
-    private boolean quit(Command command) 
+    private boolean quit(Input command) 
     {
         if(command.hasSecondWord()) {
             System.out.println("Quit what?");

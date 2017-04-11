@@ -17,7 +17,7 @@
  * @version 2011.07.31
  */
 
-public class Command
+public class Input
 {
     private String commandWord;
     private String secondWord;
@@ -29,7 +29,7 @@ public class Command
      *                  was not recognised.
      * @param secondWord The second word of the command.
      */
-    public Command(String firstWord, String secondWord)
+    public Input(String firstWord, String secondWord)
     {
         commandWord = firstWord;
         this.secondWord = secondWord;
