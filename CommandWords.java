@@ -23,16 +23,19 @@ public class CommandWords
     public CommandWords()
     {
         validCommands = new HashMap<String, AllCommands>();
-        validCommands.put("go", new AllCommands("go"));
-        validCommands.put("quit", new AllCommands("quit"));
-        validCommands.put("help", new AllCommands("help"));
-        validCommands.put("look", new AllCommands("look"));
-        validCommands.put("eat", new AllCommands("eat"));
-        validCommands.put("drink", new AllCommands("drink"));
-        validCommands.put("back", new AllCommands("back"));
-        validCommands.put("take", new AllCommands("take"));
-        validCommands.put("drop", new AllCommands("drop"));
-        validCommands.put("inventory", new AllCommands("inventory"));
+        validCommands.put("go", new AllCommands("go",(byte)00010000));
+        validCommands.put("quit", new AllCommands("quit",(byte)0));
+        validCommands.put("help", new AllCommands("help",(byte)00000010));
+        validCommands.put("look", new AllCommands("look",(byte)10000000));
+        validCommands.put("eat", new AllCommands("eat",(byte)00000010));
+        validCommands.put("drink", new AllCommands("drink",(byte)00100000));
+        validCommands.put("back", new AllCommands("back",(byte)00000001));
+        validCommands.put("take", new AllCommands("take",(byte)00000100));
+        validCommands.put("drop", new AllCommands("drop",(byte)00001000));
+        validCommands.put("inventory", new AllCommands("inventory",(byte)01000000));
+        
+        validCommands.get("help").setGoodResponse("Your command words are:\n" + getCommandList() + "\n");
+        validCommands.get("eat").setGoodResponse("You have eaten now and you are not hungry any more.");
     }
 
     /**
@@ -43,15 +46,6 @@ public class CommandWords
     public boolean isCommand(String aString)
     {
         return (validCommands.containsKey(aString));
-        /*for(AllCommands command : validCommands)
-        {
-            if(command.getKeyWord().equals(aString))
-            {
-                return true;
-            }
-        }
-        // if we get here, the string was not found in the commands
-        return false;*/
     }
     
     /**

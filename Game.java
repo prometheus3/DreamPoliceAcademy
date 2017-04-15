@@ -149,6 +149,7 @@ public class Game
      */
     public void play() 
     {   
+        CommandWords list = new CommandWords();
         agree = new Scanner(System.in);
         System.out.print("Would you like to have a full introduction? (y/n)");
         String character = agree.next();
@@ -172,7 +173,16 @@ public class Game
         boolean finished = false;
         while (! finished) {
             Input command = parser.getCommand();
-            finished = processCommand(command);
+            if(!command.isUnknown()) {
+                AllCommands theCommand = list.getCommand(command.getCommandWord());
+                path = theCommand.action(command, you, path);
+            }
+            if(command.getCommandWord().equals("quit") && !command.hasSecondWord()) {
+                finished = true;
+            }
+            else if(command.getCommandWord().equals("quit")) {
+                System.out.println("Quit what?");
+            }
             you.inAbyss();
             if(you.areDead()) {
                 System.out.println("\tYou died.");
@@ -303,7 +313,7 @@ public class Game
      */
     private void take(Input command)
     {
-        if(!command.hasSecondWord()) {
+      /*  if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to take...
             System.out.println("Take what?");
             return;
@@ -312,7 +322,7 @@ public class Game
         String object = command.getSecondWord();
         
         // Try to take said item.
-        you.pickUp(object);
+        you.pickUp(object);*/
     }
     
     /**
@@ -320,7 +330,7 @@ public class Game
      */
     private void drop(Input command)
     {
-        if(!command.hasSecondWord()) {
+     /*   if(!command.hasSecondWord()) {
             // if there is no second word, we don't know what to drop...
             System.out.println("Drop what?");
             return;
@@ -329,7 +339,7 @@ public class Game
         String object = command.getSecondWord();
         
         //Try to drop said item.
-        you.drop(object);
+        you.drop(object);*/
     }
     
     /**

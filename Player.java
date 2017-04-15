@@ -156,15 +156,16 @@ public class Player
      * Lists all items in the backpack and
      * their respective weights.
      */
-    public void items()
+    public String items()
     {
-        System.out.println("\tCurrent weight: " + currentWeight + ", Maximum weight: " + maxWeight);
-        System.out.println("\tYou are carrying:");
+        String items = "";
+        items += "\tCurrent weight: " + currentWeight + ", Maximum weight: " + maxWeight + "\n";
+        items += "\tYou are carrying:" + "\n";
         for(Item item : backpack)
         {
-            System.out.println("\t\t- " + item.getDescription() + ", wt: " + item.getWeight());
+            items += "\t\t- " + item.getDescription() + ", wt: " + item.getWeight() + "\n";
         }
-        System.out.println();
+        return items;
     }
     
     /**
