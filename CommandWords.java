@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Set;
+
 /**
  * This class is part of the "World of Zuul" application. 
  * "World of Zuul" is a very simple, text based adventure game.  
@@ -11,17 +14,28 @@
 
 public class CommandWords
 {
-    // a constant array that holds all valid command words
-    private static final String[] validCommands = {
-        "go", "quit", "help", "look", "eat", "drink", "back", "take", "drop", "inventory"
-    };
+    // an ArrayList that holds all valid command words
+    private HashMap<String, AllCommands> validCommands;
 
     /**
      * Constructor - initialise the command words.
      */
     public CommandWords()
     {
-        // nothing to do at the moment...
+        validCommands = new HashMap<String, AllCommands>();
+        validCommands.put("go", new AllCommands("go", (byte)16));
+        validCommands.put("quit", new AllCommands("quit",(byte)0));
+        validCommands.put("help", new AllCommands("help",(byte)2));
+        validCommands.put("look", new AllCommands("look",(byte)128));
+        validCommands.put("eat", new AllCommands("eat",(byte)2));
+        validCommands.put("drink", new AllCommands("drink",(byte)32));
+        validCommands.put("back", new AllCommands("back",(byte)1));
+        validCommands.put("take", new AllCommands("take",(byte)4));
+        validCommands.put("drop", new AllCommands("drop",(byte)8));
+        validCommands.put("inventory", new AllCommands("inventory",(byte)64));
+        
+        validCommands.get("help").setGoodResponse("Your command words are:\n" + getCommandList() + "\n");
+        validCommands.get("eat").setGoodResponse("You have eaten now and you are not hungry any more.");
     }
 
     /**
@@ -31,12 +45,7 @@ public class CommandWords
      */
     public boolean isCommand(String aString)
     {
-        for(int i = 0; i < validCommands.length; i++) {
-            if(validCommands[i].equals(aString))
-                return true;
-        }
-        // if we get here, the string was not found in the commands
-        return false;
+        return (validCommands.containsKey(aString));
     }
     
     /**
@@ -46,10 +55,23 @@ public class CommandWords
     public String getCommandList()
     {
         String commands = "";
-        for(String command : validCommands)
+        Set<String> command = validCommands.keySet();
+        
+        for(String commandWords : command)
         {
-            commands += command + " ";
+            commands += commandWords + " ";
         }
         return (commands += "\n");
+    }
+    
+    /**
+     * Return the AllCommands instance corresponding to it's
+     * key word. For use by the Game class to allow it to run
+     * the command.
+     * @return The command corresponding with the specific key word
+     */
+    public AllCommands getCommand(String command)
+    {
+        return (validCommands.get(command));
     }
 }
