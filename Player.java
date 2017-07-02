@@ -44,23 +44,16 @@ public class Player
     }
     
     /**
-     * Pick up an item in a room.
+     * Add an item to the backpack.
      */
-    public void pickUp(String item)
-    {
-        Item removed = currentRoom.getItem(item);
-        if(removed == null)         // item does not exist in this room
+    public void addToBackpack(Item item)
+    {   
+        if((item.getWeight() + currentWeight) <= maxWeight)  // if backpack is not full
         {
-            System.out.println("\tThere is no " + item + " here.\n");
-        }
-        else if((removed.getWeight() + currentWeight) <= maxWeight)      // if backpack is not full
-        {
-            removed = currentRoom.removeItem(item);
+            Item removed = currentRoom.removeItem(item.getName());
             // pick up item
             backpack.add(removed);
-            currentWeight += removed.getWeight();
-            
-            System.out.println("\tOk.\n");
+            currentWeight += item.getWeight();
         }
         else            // backpack is (would be) full
         {
@@ -70,12 +63,28 @@ public class Player
     }
     
     /**
-     * Add an item to the backpack.
+     * Remove an item from the backpack.
      */
-    public void addItem(Item item)
+    public void removeFromBackpack(Item item)
     {
-        backpack.add(item);
-        currentWeight += item.getWeight();
+        backpack.remove(item);
+        currentWeight -= item.getWeight();
+    }
+    
+    /**
+     * Pick up an item in a room.
+     */
+    public void pickUp(String item)
+    {
+        Item removed = currentRoom.getItem(item);
+        if(removed == null)         // item does not exist in this room
+        {
+            System.out.println("\tThere is no " + item + " here.\n");
+        }
+        else  // if item exists in this room
+        {
+            addToBackpack(removed);
+        }
     }
     
     /**
@@ -103,8 +112,7 @@ public class Player
             if(found) {
                 // drop item
                 currentRoom.addItem(currentItem);
-                backpack.remove(currentItem);
-                currentWeight -= currentItem.getWeight();
+                removeFromBackpack(currentItem);
                 
                 System.out.println("\tOk.\n");
             }

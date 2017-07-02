@@ -140,8 +140,8 @@ public class Game
         L5.setExit("west", shaft);
 
         you.setRoom(car);       // start game in the car
-        you.addItem(dreamGun);    // start with the dreamgun
-        you.addItem(file);      // start with the file
+        you.addToBackpack(dreamGun);    // start with the dreamgun
+        you.addToBackpack(file);      // start with the file
     }
 
     /**
@@ -156,7 +156,7 @@ public class Game
         if (character.equals("y")) {
             printWelcome();
         } else if (character.equals("n")) {
-            System.out.println("You have chosen not to hear the full intro");
+            System.out.println("You have chosen not to hear the full introduction");
         } else {
             //Do Nothing
         }
@@ -217,176 +217,7 @@ public class Game
                            " your police vest. As you turn to\nleave he grabs you by the shoulder.\n\"And remember Charlie:" +
                            " that gun is very confidential; if you veer\nanywhere off course, I will shoot to kill.\"");                  
     }
-    
-    /**
-     * Given a command, process (that is: execute) the command.
-     * @param command The command to be processed.
-     * @return true If the command ends the game, false otherwise.
-     */
-    private boolean processCommand(Input command) 
-    {
-        boolean wantToQuit = false;
 
-        if(command.isUnknown()) {
-            System.out.println("\tI don't know what you mean...");
-            return false;
-        }
-
-        String commandWord = command.getCommandWord();
-        if(commandWord.equals("help")) {
-            printHelp();
-        }
-        else if(commandWord.equals("go")) {
-            goRoom(command);
-        }
-        else if(commandWord.equals("look")) {
-            printLocationInfo();
-        }
-        else if(commandWord.equals("eat")) {
-            eat();
-        }
-        else if(commandWord.equals("back")) {
-            if(!path.empty())
-            {
-                you.setRoom(path.pop());
-                printLocationInfo();
-            }
-            else
-            {
-                System.out.println("\tYou are at the beginning!");
-            }
-        }
-        else if(commandWord.equals("take")) {
-            take(command);
-        }
-        else if(commandWord.equals("drop")) {
-            drop(command);
-        }
-        else if(commandWord.equals("inventory")) {
-            you.items();
-        }
-        else if(commandWord.equals("drink")) {
-            drink(command);
-        }
-        else if(commandWord.equals("quit")) {
-            wantToQuit = quit(command);
-        }
-
-        return wantToQuit;
-    }
-
-    /**
-     * Print out some help information.
-     * Here we print a list of the command words.
-     */
-    private void printHelp() 
-    {
-        System.out.println("Your command words are:");
-        System.out.println(parser.showCommands());
-    }
-
-    /** 
-     * Try to go in one direction. If there is an exit, enter
-     * the new room, otherwise print an error message.
-     */
-    private void goRoom(Input command) 
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        // Try to leave current room.
-        Room currentRoom = you.getRoom();
-        Room nextRoom = currentRoom.getExit(direction);
-        
-        if (nextRoom == null) {
-            System.out.println("Cannot go in that direction.");
-        }
-        else {
-            path.push(currentRoom);
-            you.setRoom(nextRoom);
-            printLocationInfo();
-        }
-    }
-
-    /**
-     * Try to take something.
-     */
-    private void take(Input command)
-    {
-      /*  if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know what to take...
-            System.out.println("Take what?");
-            return;
-        }
-        
-        String object = command.getSecondWord();
-        
-        // Try to take said item.
-        you.pickUp(object);*/
-    }
-    
-    /**
-     * Try to drop something.
-     */
-    private void drop(Input command)
-    {
-     /*   if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know what to drop...
-            System.out.println("Drop what?");
-            return;
-        }
-        
-        String object = command.getSecondWord();
-        
-        //Try to drop said item.
-        you.drop(object);*/
-    }
-    
-    /**
-     * Try to drink something.
-     */
-    private void drink(Input command)
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know what to drink...
-            System.out.println("Drink what?");
-            return;
-        }
-        
-        String substance = command.getSecondWord();
-        
-        // Try to drink said item.
-        if(substance.equals("blood"))
-        {
-            you.drinkBlood();
-        }
-        else
-        {
-            System.out.println("I'm not sure what you mean...");
-        }
-    }
-    
-    /** 
-     * "Quit" was entered. Check the rest of the command to see
-     * whether we really quit the game.
-     * @return true, if this command quits the game, false otherwise.
-     */
-    private boolean quit(Input command) 
-    {
-        if(command.hasSecondWord()) {
-            System.out.println("Quit what?");
-            return false;
-        }
-        else {
-            return true;  // signal that we want to quit
-        }
-    }
-    
     /**
      * Prints the current location of the user.
      */
@@ -394,12 +225,4 @@ public class Game
     {
         System.out.println(you.getRoom().getLongDescription());
     }
-    
-    /**
-     * Prints a description of eating.
-     */
-    private void eat()
-    {
-        System.out.println("You have eaten now and you are not hungry any more.");
-    }   
 }

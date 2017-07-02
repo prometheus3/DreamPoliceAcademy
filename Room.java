@@ -21,6 +21,7 @@ public class Room
     private String description;
     private HashMap<String, Room> exits;
     private HashMap<String, Item> objects;
+    private boolean locked;
 
     /**
      * Create a room described "description". Initially, it has
@@ -34,8 +35,18 @@ public class Room
         this.description = description;
         exits = new HashMap<String, Room>();
         objects = new HashMap<String, Item>();
+        locked = false;
     }
 
+    /**
+     * Check if the room is locked.
+     * @param lock True if the room is locked.
+     */
+    public boolean isLocked()
+    {
+        return(locked);
+    }
+    
     /**
      * Define an exit from this room.
      * @param description The direction of the exit.

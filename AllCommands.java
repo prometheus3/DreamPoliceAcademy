@@ -19,13 +19,13 @@ public class AllCommands
     /**
      * Constructor for objects of class AllCommands
      */
-    public AllCommands(String keyWord, byte todo/*, String badResponse*/)
+    public AllCommands(String keyWord, byte todo)
     {
         // initialise instance variables
         this.keyWord = keyWord;
         this.todo = todo;
         goodResponse = "";
-        /*  this.badResponse = badResponse;*/
+        /*badResponse = "";*/
         alternatives = new ArrayList<String>();
     }
     
@@ -47,7 +47,7 @@ public class AllCommands
     }
     
     /**
-     * Method do perform for any command.
+     * Method to perform for any command.
      */
     public Stack<Room> action(Input command, Player you, Stack<Room> path)
     {
@@ -106,6 +106,9 @@ public class AllCommands
         
                 if (nextRoom == null) {
                     System.out.println("Cannot go in that direction.");
+                }
+                else if(nextRoom.isLocked()) {
+                    System.out.println("The room is locked.");
                 }
                 else {
                     path.push(currentRoom);
