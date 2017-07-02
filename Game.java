@@ -176,12 +176,17 @@ public class Game
             if(!command.isUnknown()) {
                 AllCommands theCommand = list.getCommand(command.getCommandWord());
                 path = theCommand.action(command, you, path);
+            
+                if(command.getCommandWord().equals("quit") && !command.hasSecondWord()) {
+                    finished = true;
+                }
+                else if(command.getCommandWord().equals("quit")) {
+                    System.out.println("Quit what?");
+                }
             }
-            if(command.getCommandWord().equals("quit") && !command.hasSecondWord()) {
-                finished = true;
-            }
-            else if(command.getCommandWord().equals("quit")) {
-                System.out.println("Quit what?");
+            else
+            {
+                System.out.println("I'm not sure what you mean...");
             }
             you.inAbyss();
             if(you.areDead()) {

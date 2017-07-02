@@ -25,7 +25,7 @@ public class AllCommands
         this.keyWord = keyWord;
         this.todo = todo;
         goodResponse = "";
-/*      this.badResponse = badResponse;*/
+        /*  this.badResponse = badResponse;*/
         alternatives = new ArrayList<String>();
     }
     
@@ -51,7 +51,7 @@ public class AllCommands
      */
     public Stack<Room> action(Input command, Player you, Stack<Room> path)
     {
-        if((todo & (byte)00000001) == (byte)00000001)    // want to go back
+        if((todo & 1) == 1)    // want to go back
         {
             if(!path.empty()) {
                 you.setRoom(path.pop());
@@ -62,11 +62,11 @@ public class AllCommands
                 System.out.println("\tYou are at the beginning!");
             }
         }
-        if((todo & (byte)00000010) == (byte)00000010)    // print response
+        if((todo & 2) == 2)    // print response
         {
             System.out.println(goodResponse);
         }
-        if((todo & (byte)00000100) == (byte)00000100)    // pick up item
+        if((todo & 4) == 4)    // pick up item
         {
             if(!command.hasSecondWord()) {
                 // if there is no second word, we don't know what to take...
@@ -78,7 +78,7 @@ public class AllCommands
                 you.pickUp(object);
             }
         }
-        if((todo & (byte)00001000) == (byte)00001000)    // drop item
+        if((todo & 8) == 8)    // drop item
         {
             if(!command.hasSecondWord()) {
                 // if there is no second word, we don't know what to drop...
@@ -90,29 +90,31 @@ public class AllCommands
                 you.drop(object);
             }
         }
-        if((todo & (byte)00010000) == (byte)00010000)    // go in that direction
+        if((todo & 16) == 16)    // go in that direction
         {
             if(!command.hasSecondWord()) {
                 // if there is no second word, we don't know where to go...
                 System.out.println("Go where?");
             }
+            else
+            {
+                String direction = command.getSecondWord();
 
-            String direction = command.getSecondWord();
-
-            // Try to leave current room.
-            Room currentRoom = you.getRoom();
-            Room nextRoom = currentRoom.getExit(direction);
+                // Try to leave current room.
+                Room currentRoom = you.getRoom();
+                Room nextRoom = currentRoom.getExit(direction);
         
-            if (nextRoom == null) {
-                System.out.println("Cannot go in that direction.");
-            }
-            else {
-                path.push(currentRoom);
-                you.setRoom(nextRoom);
-                System.out.println(you.getRoom().getLongDescription());
+                if (nextRoom == null) {
+                    System.out.println("Cannot go in that direction.");
+                }
+                else {
+                    path.push(currentRoom);
+                    you.setRoom(nextRoom);
+                    System.out.println(you.getRoom().getLongDescription());
+                }
             }
         }
-        if((todo & (byte)00100000) == (byte)00100000)    // drink item
+        if((todo & 32) == 32)    // drink item
         {
             if(!command.hasSecondWord()) {
                 // if there is no second word, we don't know what to drink...
@@ -122,20 +124,23 @@ public class AllCommands
             String substance = command.getSecondWord();
         
             // Try to drink said item.
-            if(substance.equals("blood"))
+            if(substance != null)
             {
-                 you.drinkBlood();
-            }
-            else
-            {
-                System.out.println("I'm not sure what you mean...");
+                if(substance.equals("blood"))
+                {
+                    you.drinkBlood();
+                }
+                else
+                {
+                    System.out.println("I'm not sure what you mean...");
+                }
             }
         }
-        if((todo & (byte)01000000) == (byte)01000000)    // print inventory
+        if((todo & 64) == 64)    // print inventory
         {
             System.out.println(you.items());
         }
-        if((todo & (byte)10000000) == (byte)10000000)    // look
+        if((todo & 128) == 128)    // look
         {
             System.out.println(you.getRoom().getLongDescription());
         }
