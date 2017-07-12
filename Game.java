@@ -151,12 +151,13 @@ public class Game
     {   
         CommandWords list = new CommandWords();
         agree = new Scanner(System.in);
-        System.out.print("Would you like to have a full introduction? (y/n)");
+        System.out.println("\tWould you like to have a full introduction? (y/n)\n");
+        System.out.print("> ");     // print prompt
         String character = agree.next();
         if (character.equals("y")) {
             printWelcome();
         } else if (character.equals("n")) {
-            System.out.println("You have chosen not to hear the full introduction");
+            System.out.println("\tYou have chosen not to hear the full introduction\n");
         } else {
             //Do Nothing
         }

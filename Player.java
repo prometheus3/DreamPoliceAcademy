@@ -46,20 +46,21 @@ public class Player
     /**
      * Add an item to the backpack.
      */
-    public void addToBackpack(Item item)
+    public boolean addToBackpack(Item item)
     {   
+        boolean failure = false;
         if((item.getWeight() + currentWeight) <= maxWeight)  // if backpack is not full
         {
-            Item removed = currentRoom.removeItem(item.getName());
+            /*Item removed = currentRoom.removeItem(item.getName()); // no!!!! ***** */
             // pick up item
-            backpack.add(removed);
+            backpack.add(item);
             currentWeight += item.getWeight();
         }
-        else            // backpack is (would be) full
+        else            // backpack is (or would be) full
         {
-            System.out.println("\tCannot carry any more! You must first drop " +
-                               "an item.\n");
+            failure = true;
         }
+        return failure;
     }
     
     /**
@@ -74,24 +75,36 @@ public class Player
     /**
      * Pick up an item in a room.
      */
-    public void pickUp(String item)
+    public boolean pickUp(String item)
     {
+        boolean failure = false;
         Item removed = currentRoom.getItem(item);
         if(removed == null)         // item does not exist in this room
         {
             System.out.println("\tThere is no " + item + " here.\n");
+            failure = true;
         }
         else  // if item exists in this room
         {
-            addToBackpack(removed);
+            failure = addToBackpack(removed);
+            if(!failure)
+            {
+                System.out.println("\tOk.\n");
+            }
+            else
+            {
+                System.out.println("\tCannot carry any more! You must first drop an item.\n");
+            }
         }
+        return failure;
     }
     
     /**
      * Drop an item into the current room.
      */
-    public void drop(String item)
+    public Item drop(String item)
     {
+        Item dropped = null;
         if(!backpack.isEmpty()) {      // backpack is not empty
             boolean found = false;
             int index = 0;
@@ -109,12 +122,13 @@ public class Player
                 }
             }
             
-            if(found) {
+            if(found)
+            {
                 // drop item
-                currentRoom.addItem(currentItem);
+                /*currentRoom.addItem(currentItem); //no!! **********/
                 removeFromBackpack(currentItem);
-                
                 System.out.println("\tOk.\n");
+                dropped = currentItem;
             }
             else
             {
@@ -125,6 +139,7 @@ public class Player
         {
             System.out.println("\tYou are not carrying anything!\n");
         }
+        return dropped;
     }
     
     /**

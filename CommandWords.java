@@ -23,15 +23,15 @@ public class CommandWords
     public CommandWords()
     {
         validCommands = new HashMap<String, AllCommands>();
-        validCommands.put("go", new AllCommands("go", (byte)16));
+        validCommands.put("go", new SWCommands("go", (byte)32, null));
         validCommands.put("quit", new AllCommands("quit",(byte)0));
         validCommands.put("help", new AllCommands("help",(byte)2));
         validCommands.put("look", new AllCommands("look",(byte)128));
         validCommands.put("eat", new AllCommands("eat",(byte)2));
         validCommands.put("drink", new AllCommands("drink",(byte)32));
         validCommands.put("back", new AllCommands("back",(byte)1));
-        validCommands.put("take", new AllCommands("take",(byte)4));
-        validCommands.put("drop", new AllCommands("drop",(byte)8));
+        validCommands.put("take", new SWCommands("take",(byte)7, null));
+        validCommands.put("drop", new SWCommands("drop",(byte)9, null));
         validCommands.put("inventory", new AllCommands("inventory",(byte)64));
         
         validCommands.get("help").setGoodResponse("Your command words are:\n" + getCommandList() + "\n");
