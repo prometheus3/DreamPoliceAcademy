@@ -89,7 +89,7 @@ public class Player
             failure = addToBackpack(removed);
             if(!failure)
             {
-                System.out.println("\tYou dropped: \"" + removed + "\".\n");
+                System.out.println("\tYou picked up: \"" + removed.getDescription() + "\".\n");
             }
             else
             {
@@ -143,7 +143,7 @@ public class Player
         {
             // drop item
             removeFromBackpack(dropped);
-            System.out.println("\tOk.\n");
+            System.out.println("\tYou dropped: \"" + dropped.getDescription() + "\".\n");
         }
         else
         {

@@ -8,13 +8,13 @@ import java.util.Stack;
  */
 public class SWCommands extends AllCommands
 {
-    private Room requiredRoom;    // room may be specified for a command to work.
+    private String requiredRoom;    // room may be specified for a command to work.
     private String requiredItem;
     
     /**
      * Constructor for objects of class SecondWordCommands
      */
-    public SWCommands(String keyWord, byte todo, Room option1, String option2)
+    public SWCommands(String keyWord, byte todo, String option1, String option2)
     {
         super(keyWord, todo);
         requiredRoom = option1;
@@ -82,7 +82,7 @@ public class SWCommands extends AllCommands
                     System.out.println(you.getRoom().getLongDescription());
                 }
             }
-            if((super.getTodo() & 64) == 64 & !finished)    // unlock a direction 01000000 (in this version one item will unlock anything that can be unlocked)
+            if((super.getTodo() & 64) == 64 & !finished)    // unlock a direction 01000000
             {
                 String direction = command.getSecondWord();
                 Room currentRoom = you.getRoom();
@@ -94,12 +94,12 @@ public class SWCommands extends AllCommands
                 else if(!nextRoom.isLocked()) {
                     System.out.println("\tThat way is not locked.\n");
                 }
-                else if(nextRoom.isLocked() & (you.hasItem(requiredItem) == null)) {
+                else if(nextRoom.getName().equals(requiredRoom) & (you.hasItem(requiredItem) == null)) {
                     System.out.println("\tYou require the \"" + requiredItem + "\" which you do not possess.\n");
                 }
                 else
                 {
-                    System.out.println("\tYour wish is my command!.\n");
+                    System.out.println("\tYour wish is my command!\n");
                     nextRoom.unlock();
                     you.drop(requiredItem);
                 }  
