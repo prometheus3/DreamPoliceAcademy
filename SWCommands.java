@@ -1,22 +1,24 @@
 import java.util.Stack;
 
 /**
- * Commands which require a second word (and optionally a room).
+ * Commands which require a second word (and optionally a room and/or item).
  * 
- * @author Phillip Rossett
+ * @author Phillip Rossetti
  * @version 05/07/2017
  */
 public class SWCommands extends AllCommands
 {
     private Room requiredRoom;    // room may be specified for a command to work.
-
+    private String requiredItem;
+    
     /**
      * Constructor for objects of class SecondWordCommands
      */
-    public SWCommands(String keyWord, byte todo, Room optional)
+    public SWCommands(String keyWord, byte todo, Room option1, String option2)
     {
         super(keyWord, todo);
-        requiredRoom = optional;
+        requiredRoom = option1;
+        requiredItem = option2;
     }
 
     /**
@@ -68,21 +70,39 @@ public class SWCommands extends AllCommands
                 Room currentRoom = you.getRoom();
                 Room nextRoom = currentRoom.getExit(direction);
         
-                if (nextRoom == null) {
+                if(nextRoom == null) {
                     System.out.println("\tCannot go in that direction.\n");
                 }
                 else if(nextRoom.isLocked()) {
-                    System.out.println("\tThe room is locked.\n");
+                    System.out.println("\tThat direction is locked.\n");
                 }
-                else {
+                else{
                     path.push(currentRoom);
                     you.setRoom(nextRoom);
                     System.out.println(you.getRoom().getLongDescription());
                 }
             }
-            if((super.getTodo() & 64) == 64 & !finished)    // go in that direction 01000000
+            if((super.getTodo() & 64) == 64 & !finished)    // unlock a direction 01000000 (in this version one item will unlock anything that can be unlocked)
             {
-                
+                String direction = command.getSecondWord();
+                Room currentRoom = you.getRoom();
+                Room nextRoom = currentRoom.getExit(direction);
+        
+                if(nextRoom == null) {
+                    System.out.println("\tThere is nothing in that direction.\n");
+                }
+                else if(!nextRoom.isLocked()) {
+                    System.out.println("\tThat way is not locked.\n");
+                }
+                else if(nextRoom.isLocked() & (you.hasItem(requiredItem) == null)) {
+                    System.out.println("\tYou require the \"" + requiredItem + "\" which you do not possess.\n");
+                }
+                else
+                {
+                    System.out.println("\tYour wish is my command!.\n");
+                    nextRoom.unlock();
+                    you.drop(requiredItem);
+                }  
             }
             if((super.getTodo() & 128) == 128 & !finished)    // drink item 10000000
             {

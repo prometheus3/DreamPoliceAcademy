@@ -89,7 +89,7 @@ public class Player
             failure = addToBackpack(removed);
             if(!failure)
             {
-                System.out.println("\tOk.\n");
+                System.out.println("\tYou dropped: \"" + removed + "\".\n");
             }
             else
             {
@@ -100,16 +100,18 @@ public class Player
     }
     
     /**
-     * Drop an item into the current room.
+     * Checks to see if an item is in the backpack.
+     * @return null if not found.
      */
-    public Item drop(String item)
+    public Item hasItem(String item)
     {
-        Item dropped = null;
-        if(!backpack.isEmpty()) {      // backpack is not empty
+        Item sought = null;
+        if(backpack.size() > 0)
+        {
             boolean found = false;
             int index = 0;
             Item currentItem = null;
-            
+        
             while(!found && index < backpack.size())
             {
                 currentItem = backpack.get(index);
@@ -121,23 +123,31 @@ public class Player
                     index++;
                 }
             }
-            
+        
             if(found)
             {
-                // drop item
-                /*currentRoom.addItem(currentItem); //no!! **********/
-                removeFromBackpack(currentItem);
-                System.out.println("\tOk.\n");
-                dropped = currentItem;
-            }
-            else
-            {
-                System.out.println("\tYou are not carrying that.\n");
+                sought = currentItem;
             }
         }
-        else        // backpack is empty
+        return sought;
+    }
+
+    /**
+     * Drop an item into the current room.
+     */
+    public Item drop(String item)
+    {
+        Item dropped = hasItem(item);
+        
+        if(dropped != null)
         {
-            System.out.println("\tYou are not carrying anything!\n");
+            // drop item
+            removeFromBackpack(dropped);
+            System.out.println("\tOk.\n");
+        }
+        else
+        {
+            System.out.println("\tYou are not carrying any \"" + item + "\".\n");
         }
         return dropped;
     }
