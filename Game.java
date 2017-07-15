@@ -51,10 +51,12 @@ public class Game
         // killer's head. LEGEND: B - basement, L - level, sw - stairwell
         Room B, L1, L2, L3, L4, L5, L6, lift, shaft, swb, sw1, sw2, sw3, sw4, sw6, abyss; // dream world
         
-        Item dreamGun, file, blood;
-        dreamGun = new Item("dreamgun", "A purple dreamgun", 50);
+        Item dreamGun, file, blood, key, sword;
+        dreamGun = new Item("dreamgun", "A purple dreamgun", 25);
         file = new Item("file", "A manilla envelope (the wolfman's file)", 2);
         blood = new Item("blood", "A packet of blood", 8);
+        key = new Item("key", "A golden key", 10);
+        sword = new Item("sword", "A sword", 50);
         
         // create the rooms
         car = new Room("car", "in a police car.");
@@ -66,8 +68,11 @@ public class Game
         ledge = new Room("ledge", "on a high ledge. You have a direct shot at your target.");
         L1 = new Room("level1", "in the wolfman's head. There is a sign on a nearby " +
                        "wall saying:\n\t\"ST MAGARET'S HOSPITAL: LEVEL ONE\"");
+        L1.addItem(key);
+        
         sw1 = new Room("sw1", "on level 1 of the stairwell. A \"2\" is painted on the wall " +
                        "besides an upward arrow. A \"B\" is acompanied with a downward arrow.");
+        sw1.addItem(sword);
         sw2 = new Room("sw2", "on level 2 of the stairwell. There is a door leading to level 2.");
         
         L2 = new Room("level2", "on the east side of level 2. There is a sign on a nearby " +
@@ -84,17 +89,18 @@ public class Game
         sw6 = new Room("sw6", "on level 6 of the stairwell. There is a door leading to level 6.");
         L6 = new Room("level6", "on the east side of level 6. There is a sign on a nearby " +
                        "wall saying:\n\t\"ST MAGARET'S HOSPITAL: LEVEL SIX\"");
-        L5 = new Room("level5", "on the west side of level 5. There is a rumbling noise coming " +
-                      "from the east. From sign on a nearby wall you read:" +
+        L5 = new Room("level5", "on the west side of level 5. There is a werewolf in front of you. " +
+                      "From sign on a nearby wall you read:" +
                        "\n\t\"ST MAGARET'S HOSPITAL: LEVEL FIVE\"");
+        L5.lock();
         B = new Room("basement", "in the basement of the hospital. It is too dark to see and there is most\n" +
                      "\tlikely an abyss to the west");
         swb = new Room("swb", "on the basement level of the stairwell. There is a door leading " +
                        "to the basement");
         lift = new Room("lift", "in an elevator. By the door is listed the options:\n" +
                         "\tL6\n\tL4\n\tL3\n\tL2\n\tL1\n\tB\n\"L1\" is eluminated.");
-        shaft = new Room("shaft", "in the elevator shaft; on top of the elevator. " +
-                         "Just above you see an open doorway you can climb through.");
+        shaft = new Room("shaft", "in the elevator shaft; on top of the elevator.\n" +
+                         "\tJust to your east you see a door you could reach.");
         abyss = new Room("abyss", "in an abyss.");
         
         // initialise room exits

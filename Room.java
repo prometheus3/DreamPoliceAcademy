@@ -48,6 +48,22 @@ public class Room
     }
     
     /**
+     * Lock a room.
+     */
+    public void lock()
+    {
+        locked = true;
+    }
+    
+    /**
+     * Unlock a room.
+     */
+    public void unlock()
+    {
+        locked = false;
+    }
+    
+    /**
      * Define an exit from this room.
      * @param description The direction of the exit.
      * @param neighbour The room in the given direction.

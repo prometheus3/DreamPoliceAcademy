@@ -75,7 +75,7 @@ public class AllCommands
         {
             System.out.println(goodResponse);
         }
-        if((todo & 4) == 4)    // pick up item 00000100
+        if((todo & 4) == 4)    // unlock room 00000100
         {
             
         }
